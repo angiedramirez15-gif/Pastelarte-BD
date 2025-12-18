@@ -8,7 +8,7 @@ SET direccion = 'Diagonal 30 #20-19'
 WHERE id_cliente = 10;
 
 -- Aumentar stock de un producto
-UPDATE productos
+UPDATE producto
 SET stock =  10
 WHERE id_producto = 5;
 
