@@ -28,7 +28,7 @@ USE `pastelarte`;
 -- Estructura de tabla para la tabla `clientes`
 --
 
-CREATE TABLE IF NOT EXISTS `clientes` (
+CREATE TABLE IF NOT EXISTS `cliente` (
   `idcliente` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
   `correo` varchar(30) NOT NULL,
@@ -66,10 +66,10 @@ CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 --
 
 CREATE TABLE IF NOT EXISTS `metodo_pago` (
-  `idpago` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` enum('efectivo','nequi') DEFAULT NULL,
   `detalle` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`idpago`)
+  PRIMARY KEY (`id_pago`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -78,14 +78,14 @@ CREATE TABLE IF NOT EXISTS `metodo_pago` (
 -- Estructura de tabla para la tabla `pedidos`
 --
 
-CREATE TABLE IF NOT EXISTS `pedidos` (
-  `idpedido` int(11) NOT NULL AUTO_INCREMENT,
-  `idcliente` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pedido` (
+  `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `estado` enum('pendiente','pagado','cancelado') DEFAULT NULL,
   `total` float DEFAULT NULL,
-  PRIMARY KEY (`idpedido`),
-  KEY `idcliente` (`idcliente`)
+  PRIMARY KEY (`id_pedido`),
+  KEY `id_cliente` (`id_ cliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -95,13 +95,13 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
 --
 
 CREATE TABLE IF NOT EXISTS `personalizacion` (
-  `idpersonalizacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_personalizacion` int(11) NOT NULL AUTO_INCREMENT,
   `tamaño` varchar(30) DEFAULT NULL,
   `sabor` varchar(30) DEFAULT NULL,
   `decoraciones` enum('fondant','chispas','frutas','flores comestibles') DEFAULT NULL,
   `descripcion` varchar(100) DEFAULT NULL COMMENT 'aqui se escribe si quiere agregar algun texto en el pastel o algo que quiera personalizar.',
   `costoextra` float DEFAULT 0,
-  PRIMARY KEY (`idpersonalizacion`)
+  PRIMARY KEY (`id_personalizacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -110,15 +110,15 @@ CREATE TABLE IF NOT EXISTS `personalizacion` (
 -- Estructura de tabla para la tabla `productos`
 --
 
-CREATE TABLE IF NOT EXISTS `productos` (
-  `idproducto` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `producto` (
+  `id_producto` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
   `descripcion` tinytext DEFAULT NULL,
   `precio` float NOT NULL,
   `stock` int(11) NOT NULL,
-  `idrol` int(11) NOT NULL,
+  `id_rol` int(11) NOT NULL,
   `categoria` enum('pastel','ceroazucar','adicionales','postres') DEFAULT 'pastel',
-  PRIMARY KEY (`idproducto`)
+  PRIMARY KEY (`id_producto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -142,22 +142,22 @@ CREATE TABLE IF NOT EXISTS `rol` (
 --
 -- Filtros para la tabla `clientes`
 --
-ALTER TABLE `clientes`
-  ADD CONSTRAINT `clientes_ibfk_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`id`);
+ALTER TABLE `cliente`
+  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id`);
 
 --
 -- Filtros para la tabla `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
-  ADD CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`idpedido`) REFERENCES `pedidos` (`idpedido`),
-  ADD CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`idproducto`) REFERENCES `productos` (`idproducto`),
-  ADD CONSTRAINT `detalle_pedido_ibfk_3` FOREIGN KEY (`idpersonalizacion`) REFERENCES `personalizacion` (`idpersonalizacion`);
+  ADD CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`),
+  ADD CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
+  ADD CONSTRAINT `detalle_pedido_ibfk_3` FOREIGN KEY (`id_personalizacion`) REFERENCES `personalizacion` (`id_personalizacion`);
 
 --
 -- Filtros para la tabla `pedidos`
 --
-ALTER TABLE `pedidos`
-  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idcliente`) REFERENCES `clientes` (`idcliente`);
+ALTER TABLE `pedido`
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

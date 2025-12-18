@@ -1,17 +1,17 @@
 -- Borrar un cliente específico
-DELETE FROM clientes
-WHERE idcliente = 8;
+DELETE FROM cliente
+WHERE id_cliente = 8;
 
 DELETE FROM clientes
-WHERE idcliente = 8;
+WHERE id_cliente = 8;
 
 
 -- Borrar pedidos 
-DELETE FROM pedidos
+DELETE FROM pedido
 WHERE fecha < '2024-01-01';
 
-DELETE FROM pedidos
-WHERE idpedido=1;
+DELETE FROM pedido
+WHERE id_pedido=1;
 
-DELETE FROM pedidos
-WHERE idpedido=2;
+DELETE FROM pedido
+WHERE id_pedido=2;
